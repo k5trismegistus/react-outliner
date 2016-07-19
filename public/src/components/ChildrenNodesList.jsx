@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Node from './Node'
 
 export default class ChildrenNodesList extends Component {
 
@@ -9,10 +10,10 @@ export default class ChildrenNodesList extends Component {
   render() {
     return (
       <ul>
-        { this.props.data.nodes.map(
+        { this.props.nodes.map(
           (node, idx) => {
-            if (node.id in this.props.data.rootNodes) {
-                return <Node node={node}  />
+            if (this.props.children.indexOf(node.id) > -1) {
+                return <Node key={node.id} node={node} nodes={this.props.nodes} />
             }
           }
         ) }

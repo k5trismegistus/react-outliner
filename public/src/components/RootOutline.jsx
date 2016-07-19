@@ -12,8 +12,8 @@ export default class RootOutline extends Component {
       <ul>
         { this.props.data.nodes.map(
           (node, idx) => {
-            if (node.id in this.props.data.rootNodes) {
-                return <Node key={node.id} data={node} />
+            if (this.props.data.rootNodes.indexOf(node.id) > -1) {
+                return <Node key={node.id} node={node} nodes={this.props.data.nodes} />
             }
           }
         ) }

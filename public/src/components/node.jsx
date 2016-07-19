@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ChildrenNodesList from './ChildrenNodesList'
 
 export default class Node extends Component {
 
@@ -7,9 +8,20 @@ export default class Node extends Component {
   }
 
   render() {
-    console.log(this.props.data)
     return(
-      <li>{ this.props.data.content }</li>
+      <li>
+        <div>{ this.props.node.content }</div>
+        {
+          (() => {
+            if (this.props.node.children.length > -1) {
+              return <ChildrenNodesList nodes={this.props.nodes} children={this.props.node.children} />
+            }
+          })()
+        }
+      </li>
+      // {
+      //     return <ChildrenNodesList nodes={this.props.ndoes} children={this.props.node.children} />
+      // }
     )
   }
 }
