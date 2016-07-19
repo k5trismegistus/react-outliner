@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NodeList from './nodeList'
+import RootOutline from './RootOutline'
 
 var test = {
   rootNodes: [0, 4, 5],
@@ -23,7 +23,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <NodeList data={ test } />
+      <RootOutline data={ test } />
     )
   }
 

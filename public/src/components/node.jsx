@@ -7,6 +7,7 @@ export default class Node extends Component {
   }
 
   render() {
+    console.log(this.props.data)
     return(
       <li>{ this.props.data.content }</li>
     )
