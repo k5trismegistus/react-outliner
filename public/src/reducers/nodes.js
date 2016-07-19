@@ -13,7 +13,6 @@ const test = {
 }
 
 const nodes = (state=test, action) => {
-  console.log(state)
   switch (action.type) {
     case 'ADD_NODE':
       // @todo

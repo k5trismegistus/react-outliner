@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Node from './Node'
+import NodeContainer from '../container/nodeContainer'
 
 export default class RootOutline extends Component {
 
@@ -8,12 +8,13 @@ export default class RootOutline extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <ul>
-        { this.props.data.nodes.map(
+        { this.props.nodes.map(
           (node, idx) => {
-            if (this.props.data.rootNodes.indexOf(node.id) > -1) {
-                return <Node key={node.id} node={node} nodes={this.props.data.nodes} />
+            if (this.props.rootNodes.indexOf(node.id) > -1) {
+                return <NodeContainer key={node.id} node={node} />
             }
           }
         ) }
