@@ -10,7 +10,7 @@ export default class Node extends Component {
   render() {
     return(
       <li>
-        <div>{ this.props.node.content }</div>
+        <input type='text' value={this.props.node.content} />
         {
           (() => {
             if (this.props.node.children.length > -1) {
