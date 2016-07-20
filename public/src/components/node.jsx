@@ -8,8 +8,9 @@ export default class Node extends Component {
   }
 
   render() {
+    console.log(this.props)
     return(
-      <li>
+      <li onClick={ this.props.onNodeClick }>
         <input type='text' value={this.props.node.content} />
         {
           (() => {
