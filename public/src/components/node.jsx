@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import $ from 'jquery'
 import ChildrenNodesList from './ChildrenNodesList'
 
 export default class Node extends Component {
@@ -12,27 +13,31 @@ export default class Node extends Component {
       let selection = window.getSelection()
       let range = selection.getRangeAt(0)
       if (range.startOffset == 0) {
-        console.log('start of line')
+        let currentIdx = $('.node').get().indexOf(e.target)
+        $('.node')[currentIdx - 1].focus()
       }
     }
     if (e.keyCode == '40') {
       let selection = window.getSelection()
       let range = selection.getRangeAt(0)
       if (range.endOffset == e.target.textContent.length) {
-        console.log('end of line')
-        let ne = new KeyboardEvent("keydown",
-          {bubbles : true, cancelable : true, key : "Tab", keyCode: '9', shiftKey : false}
-        )
-        document.dispatchEvent(ne)
+        let currentIdx = $('.node').get().indexOf(e.target)
+        $('.node')[currentIdx + 1].focus()
       }
     }
+  }
+
+  previousBox() {
+
   }
 
   render() {
     console.log(this.props)
     return(
       <li onClick={ this.props.onNodeClick }>
-        <div contentEditable
+        <div
+          className="node"
+          contentEditable
           onBlur={ this.props.onNodeBlur }
           onKeyDown={ this.caretPosition } >
           { this.props.node.content }
