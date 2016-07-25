@@ -10,8 +10,18 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onNodeClick: (id) => {
-      console.log('clicked')
+    onNodeClick: (e) => {
+    },
+    onNodeBlur: (e) => {
+    },
+    onNodeKeyDown: (e) => {
+      if (e.keyCode == '38') {
+        let selection = window.getSelection()
+        console.log(selection)
+        let range = selection.getRangeAt(0)
+        console.log(range)
+        console.log(e.target.selectionStart)
+      }
     }
   }
 }
