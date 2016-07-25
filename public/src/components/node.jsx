@@ -9,7 +9,8 @@ export default class Node extends Component {
   }
 
   caretPosition(e) {
-    if (e.keyCode == '38') {
+    console.log(e)
+    if ((!e.ctrlKey && !e.metaKey) && e.keyCode == '38') {
       let selection = window.getSelection()
       let range = selection.getRangeAt(0)
       if (range.startOffset == 0) {
@@ -17,7 +18,7 @@ export default class Node extends Component {
         $('.node')[currentIdx - 1].focus()
       }
     }
-    if (e.keyCode == '40') {
+    if ((!e.ctrlKey && !e.metaKey) && e.keyCode == '40') {
       let selection = window.getSelection()
       let range = selection.getRangeAt(0)
       if (range.endOffset == e.target.textContent.length) {
@@ -27,9 +28,6 @@ export default class Node extends Component {
     }
   }
 
-  previousBox() {
-
-  }
 
   render() {
     console.log(this.props)
