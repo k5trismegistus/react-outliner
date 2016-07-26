@@ -8,7 +8,6 @@ export default class ChildrenNodesList extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <ul>
         { this.props.nodes.map(

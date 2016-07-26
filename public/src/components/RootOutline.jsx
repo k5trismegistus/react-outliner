@@ -8,7 +8,6 @@ export default class RootOutline extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <ul>
         { this.props.nodes.map(

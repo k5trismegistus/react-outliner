@@ -12,6 +12,21 @@ const test = {
   ]
 }
 
+const node = (state, action) => {
+  switch (action.type) {
+    case 'COLLAPSE_NODE':
+      if (state.id !== action.nodeId) {
+        return state
+      }
+      return Object.assign({}, state, {collapsed: true})
+    case 'UNCOLLAPSE_NODE':
+      if (state.id !== action.nodeId) {
+        return state
+      }
+      return Object.assign({}, state, {collapsed: false})
+  }
+}
+
 const nodes = (state=test, action) => {
   switch (action.type) {
     case 'ADD_NODE':
@@ -33,11 +48,16 @@ const nodes = (state=test, action) => {
       // @todo
       return state
     case 'COLLAPSE_NODE':
-      // @todo
-      return state
+      return Object.assign({}, state, {nodes: state.nodes.map( n =>
+        node(n, action)
+      )
+    })
     case 'UNCOLLAPSE_NODE':
-      // @todo
-      return state
+      return Object.assign({}, state, {nodes: state.nodes.map( n =>
+        node(n, action)
+      )
+    })
+
     default:
       return state
   }

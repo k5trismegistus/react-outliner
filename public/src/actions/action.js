@@ -22,44 +22,44 @@ export const editNode = (text, nodeId) => {
   }
 }
 
-export deleteNode = (nodeId) => {
+export const deleteNode = (nodeId) => {
   return {
     type: DELETE_NODE,
     nodeId
   }
 }
 
-export indentNode = (nodeId) => {
+export const indentNode = (nodeId) => {
   return {
     type: INDENT_NODE,
     nodeId
   }
 }
 
-export unindentNode = (nodeId) => {
+export const unindentNode = (nodeId) => {
   return {
     type: UNINDENT_NODE,
     nodeId
   }
 }
 
-export moveNode = (nodeId, newParentId, newPrevId) => {
+export const moveNode = (nodeId, newParentId, newPrevId) => {
   return {
     type: MOVE_NODE,
-    nodeId
+    nodeId,
     parentId,
     prevId
   }
 }
 
-export collapseNode = (nodeId) => {
+export const collapseNode = (nodeId) => {
   return {
     type: COLLAPSE_NODE,
     nodeId
   }
 }
 
-export uncollapseNode = (nodeId) => {
+export const uncollapseNode = (nodeId) => {
   return {
     type: UNCOLLAPSE_NODE,
     nodeId

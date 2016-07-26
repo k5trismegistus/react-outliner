@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import Node from '../components/Node'
+import { collapseNode, uncollapseNode } from '../actions/action'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -14,15 +15,18 @@ const mapDispatchToProps = (dispatch) => {
     },
     onNodeBlur: (e) => {
     },
-    onNodeKeyDown: (e) => {
-      if (e.keyCode == '38') {
-        let selection = window.getSelection()
-        console.log(selection)
-        let range = selection.getRangeAt(0)
-        console.log(range)
-        console.log(e.target.selectionStart)
-      }
-    }
+    collapse: (nodeId) => {
+      dispatch(collapseNode(nodeId))
+    },
+    uncollapse: (nodeId) => {
+      dispatch(uncollapseNode(nodeId))
+    },
+    moveUp: (nodeId) => {
+      console.log('moveup')
+    },
+    moveDown: (nodeId) => {
+      console.log('movedown')
+    },
   }
 }
 
