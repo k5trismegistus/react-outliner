@@ -12,18 +12,50 @@ const test = {
   ]
 }
 
+const swapInArray = (array, sourceIdx, targetIdx) => {
+  let copiedArray = array.concat()
+  copiedArray[sourceIdx] = array[targetIdx]
+  copiedArray[targetIdx] = array[sourceIdx]
+  console.log(copiedArray)
+  return copiedArray
+}
+
+const isParent = (childrenList, childNodeId) => {
+  return (childrenList.indexOf(childNodeId) > -1)
+}
+
 const node = (state, action) => {
   switch (action.type) {
-    case 'COLLAPSE_NODE':
+    case 'COLLAPSE_NODE': {
       if (state.id !== action.nodeId) {
         return state
       }
       return Object.assign({}, state, {collapsed: true})
-    case 'UNCOLLAPSE_NODE':
+    }
+    case 'UNCOLLAPSE_NODE': {
       if (state.id !== action.nodeId) {
         return state
       }
       return Object.assign({}, state, {collapsed: false})
+    }
+    case 'MOVE_UP': {
+      let target = state.children.indexOf(action.nodeId)
+      if (target > 0){
+        return Object.assign({}, state, {
+          children: swapInArray(state.children, target, target-1)
+        })
+      }
+      return state
+    }
+    case 'MOVE_DOWN': {
+      let target = state.children.indexOf(action.nodeId)
+      if ((target < state.children.length-1) && (target > -1) ){
+        return Object.assign({}, state, {
+          children: swapInArray(state.children, target, target+1)
+        })
+      }
+      return state
+    }
   }
 }
 
@@ -47,6 +79,17 @@ const nodes = (state=test, action) => {
     case 'MOVE_NODE':
       // @todo
       return state
+    case 'MOVE_UP':
+      return Object.assign({}, state, {nodes: state.nodes.map( n =>
+          node(n, action)
+        )
+      })
+    case 'MOVE_DOWN':
+      return Object.assign({}, state, {nodes: state.nodes.map( n =>
+          node(n, action)
+        )
+      })
+
     case 'COLLAPSE_NODE':
       return Object.assign({}, state, {nodes: state.nodes.map( n =>
         node(n, action)

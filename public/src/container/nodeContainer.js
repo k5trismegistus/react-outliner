@@ -1,6 +1,11 @@
 import { connect } from 'react-redux'
 import Node from '../components/Node'
-import { collapseNode, uncollapseNode } from '../actions/action'
+import {
+  collapseNode,
+  uncollapseNode,
+  moveUp,
+  moveDown
+} from '../actions/action'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -22,10 +27,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(uncollapseNode(nodeId))
     },
     moveUp: (nodeId) => {
-      console.log('moveup')
+      dispatch(moveUp(nodeId))
     },
     moveDown: (nodeId) => {
-      console.log('movedown')
+      dispatch(moveDown(nodeId))
     },
   }
 }

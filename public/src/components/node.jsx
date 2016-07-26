@@ -45,11 +45,13 @@ export default class Node extends Component {
     }
     // Move Up Current Node
     else if (((e.ctrlKey && !e.metaKey) || (!e.ctrlKey && e.metaKey)) && e.shiftKey && e.keyCode == '38') {
+      e.preventDefault()
       this.props.moveUp(this.props.node.id)
       return
     }
     // Move Down Current Node
     else if (((e.ctrlKey && !e.metaKey) || (!e.ctrlKey && e.metaKey)) && e.shiftKey && e.keyCode == '40') {
+      e.preventDefault()
       this.props.moveDown(this.props.node.id)
       return
     }
@@ -72,8 +74,7 @@ export default class Node extends Component {
         </div>
         {
           (() => {
-            if ((this.props.node.children.length > -1) && this.props.node.collapsed) {
-              console.log(this.props.node.collapsed)
+            if ((this.props.node.children.length > 0) && this.props.node.collapsed) {
               return <ChildrenNodesList nodes={ this.props.nodes } children={ this.props.node.children } />
             }
           })()

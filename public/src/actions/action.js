@@ -4,6 +4,8 @@ export const DELETE_NODE = 'DELETE_NODE'
 export const INDENT_NODE = 'INDENT_NODE'
 export const UNINDENT_NODE = 'UNINDENT_NODE'
 export const MOVE_NODE = 'MOVE_NODE'
+export const MOVE_UP = 'MOVE_UP'
+export const MOVE_DOWN = 'MOVE_DOWN'
 export const COLLAPSE_NODE = 'COLLAPSE_NODE'
 export const UNCOLLAPSE_NODE = 'UNCOLLAPSE_NODE'
 
@@ -39,6 +41,20 @@ export const indentNode = (nodeId) => {
 export const unindentNode = (nodeId) => {
   return {
     type: UNINDENT_NODE,
+    nodeId
+  }
+}
+
+export const moveUp = (nodeId) => {
+  return {
+    type: MOVE_UP,
+    nodeId
+  }
+}
+
+export const moveDown = (nodeId) => {
+  return {
+    type: MOVE_DOWN,
     nodeId
   }
 }

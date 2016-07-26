@@ -10,15 +10,15 @@ export default class ChildrenNodesList extends Component {
   render() {
     return (
       <ul>
-        { this.props.nodes.map(
-          (node, idx) => {
-            if (this.props.children.indexOf(node.id) > -1) {
-                return <NodeContainer key={node.id} node={node} />
-            }
-          }
-        ) }
+        {
+          this.props.children.map(childId => {
+            let node = this.props.nodes.find((n) => {
+              return(n.id == childId)
+            })
+            return <NodeContainer key={node.id} node={node} />
+          })
+        }
       </ul>
     )
   }
-
 }
