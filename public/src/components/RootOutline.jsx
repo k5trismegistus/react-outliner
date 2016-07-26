@@ -10,13 +10,14 @@ export default class RootOutline extends Component {
   render() {
     return (
       <ul>
-        { this.props.nodes.map(
-          (node, idx) => {
-            if (this.props.rootNodes.indexOf(node.id) > -1) {
-                return <NodeContainer key={node.id} node={node} />
-            }
-          }
-        ) }
+        {
+          this.props.rootNodes.map(nodeId => {
+            let node = this.props.nodes.find((n) => {
+              return(n.id == nodeId)
+            })
+            return <NodeContainer key={node.id} node={node} />
+          })
+        }
       </ul>
     )
   }

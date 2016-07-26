@@ -49,7 +49,7 @@ const node = (state, action) => {
     }
     case 'MOVE_DOWN': {
       let target = state.children.indexOf(action.nodeId)
-      if ((target < state.children.length-1) && (target > -1) ){
+      if ((target > -1) && (target < state.children.length-1) ){
         return Object.assign({}, state, {
           children: swapInArray(state.children, target, target+1)
         })
@@ -61,46 +61,60 @@ const node = (state, action) => {
 
 const nodes = (state=test, action) => {
   switch (action.type) {
-    case 'ADD_NODE':
-      // @todo
+    case 'ADD_NODE': {
       return state
-    case 'EDIT_NODE':
-      // @todo
+    }
+    case 'EDIT_NODE': {
       return state
-    case 'DELETE_NODE':
-      // @todo
+    }
+    case 'DELETE_NODE': {
       return state
-    case 'INDENT_NODE':
-      // @todo
+    }
+    case 'INDENT_NODE': {
       return state
-    case 'UNINDENT_NODE':
-      // @todo
+    }
+    case 'UNINDENT_NODE': {
       return state
-    case 'MOVE_NODE':
-      // @todo
+    }
+    case 'MOVE_NODE':{
       return state
-    case 'MOVE_UP':
+    }
+    case 'MOVE_UP': {
+      let target = state.rootNodes.indexOf(action.nodeId)
+      if (target > 0) {
+        let target = state.rootNodes.indexOf(action.nodeId)
+        return Object.assign({}, state, {
+          rootNodes: swapInArray(state.rootNodes, target, target-1)})
+      }
       return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )
       })
-    case 'MOVE_DOWN':
+    }
+    case 'MOVE_DOWN': {
+      let target = state.rootNodes.indexOf(action.nodeId)
+      if (target > -1 && (target < state.rootNodes.length-1)) {
+        let target = state.rootNodes.indexOf(action.nodeId)
+        return Object.assign({}, state, {
+          rootNodes: swapInArray(state.rootNodes, target, target+1)})
+      }
       return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )
       })
-
-    case 'COLLAPSE_NODE':
-      return Object.assign({}, state, {nodes: state.nodes.map( n =>
-        node(n, action)
-      )
-    })
-    case 'UNCOLLAPSE_NODE':
-      return Object.assign({}, state, {nodes: state.nodes.map( n =>
-        node(n, action)
-      )
-    })
-
+    }
+    case 'COLLAPSE_NODE': {
+        return Object.assign({}, state, {nodes: state.nodes.map( n =>
+          node(n, action)
+        )
+      })
+    }
+    case 'UNCOLLAPSE_NODE': {
+        return Object.assign({}, state, {nodes: state.nodes.map( n =>
+          node(n, action)
+        )
+      })
+    }
     default:
       return state
   }
