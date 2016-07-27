@@ -9,8 +9,14 @@ export default class Node extends Component {
   }
 
   _onKeyDown(e) {
+    // Add new node
+    if (!e.shiftKey && e.keyCode == '13') {
+      e.preventDefault()
+      this.props.addNode(this.props.node.id, 'hello')
+      return
+    }
     // Move to Upper Node
-    if ((!e.ctrlKey && !e.metaKey) && e.keyCode == '38') {
+    else if ((!e.ctrlKey && !e.metaKey) && e.keyCode == '38') {
       let selection = window.getSelection()
       let range = selection.getRangeAt(0)
       if (range.startOffset == 0) {
@@ -58,7 +64,6 @@ export default class Node extends Component {
   }
 
   _onClick(e) {
-    console.log(this.props)
   }
 
   render() {

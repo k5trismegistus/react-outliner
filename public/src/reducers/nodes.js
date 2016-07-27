@@ -1,3 +1,5 @@
+import uuid from 'uuid'
+
 const test = {
   rootNodeId: 999,
   nodes: [
@@ -17,12 +19,7 @@ const swapInArray = (array, sourceIdx, targetIdx) => {
   let copiedArray = array.concat()
   copiedArray[sourceIdx] = array[targetIdx]
   copiedArray[targetIdx] = array[sourceIdx]
-  console.log(copiedArray)
   return copiedArray
-}
-
-const isParent = (childrenList, childNodeId) => {
-  return (childrenList.indexOf(childNodeId) > -1)
 }
 
 const node = (state, action) => {
@@ -60,10 +57,46 @@ const node = (state, action) => {
   }
 }
 
+const findNodeById = (nodes, nodeId) => {
+  return (nodes.find(n => {
+    return (n.id == nodeId)
+  }))
+}
+
+const addChildTo = (nodes, nodeId) => {
+  return (nodes.find(n => {
+    return (n.children.indexOf(nodeId) > -1)
+  }))
+}
+
+
+
 const nodes = (state=test, action) => {
   switch (action.type) {
     case 'ADD_NODE': {
-      return state
+      let newNodeId = uuid.v4()
+      let newNode = {
+        id: newNodeId,
+        text: action.text,
+        children: [],
+        collapsed: true
+      }
+
+      let derivedFrom = findNodeById(state.nodes, action.nodeId)
+      if (derivedFrom.children.length > 0) {
+        return Object.assign({}, state, {
+            nodes: [
+              newNode, ...(state.nodes.map(n => {
+                if (n.id == derivedFrom.id) {
+                  return Object.assign({}, derivedFrom, {children: [newNodeId, ...derivedFrom.children]})
+                }
+                return n
+              }
+            ))
+          ]
+        })
+      }
+
     }
     case 'EDIT_NODE': {
       return state

@@ -9,11 +9,11 @@ export const MOVE_DOWN = 'MOVE_DOWN'
 export const COLLAPSE_NODE = 'COLLAPSE_NODE'
 export const UNCOLLAPSE_NODE = 'UNCOLLAPSE_NODE'
 
-export const addNode = (text, deriveFrom) => {
+export const addNode = (nodeId, text) => {
   return {
     type: ADD_NODE,
     text,
-    deriveFrom
+    nodeId
   }
 }
 

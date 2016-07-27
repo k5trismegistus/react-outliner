@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Node from '../components/Node'
 import {
+  addNode,
   collapseNode,
   uncollapseNode,
   moveUp,
@@ -16,6 +17,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addNode: (nodeId, text) => {
+      dispatch(addNode(nodeId, text))
+    },
     onNodeClick: (e) => {
     },
     onNodeBlur: (e) => {
