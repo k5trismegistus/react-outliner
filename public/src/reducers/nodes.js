@@ -1,6 +1,7 @@
 const test = {
-  rootNodes: [0, 3, 4, 5],
+  rootNodeId: 999,
   nodes: [
+    { id: 999, content: "ルートノード", children: [0, 3, 4, 5], collapsed:true },
     { id: 0, content: "ノード0", children: [1], collapsed: true },
     { id: 1, content: "ノード1", children: [2], collapsed: true },
     { id: 2, content: "ノード2", children: [], collapsed: true },
@@ -80,24 +81,12 @@ const nodes = (state=test, action) => {
       return state
     }
     case 'MOVE_UP': {
-      let target = state.rootNodes.indexOf(action.nodeId)
-      if (target > 0) {
-        let target = state.rootNodes.indexOf(action.nodeId)
-        return Object.assign({}, state, {
-          rootNodes: swapInArray(state.rootNodes, target, target-1)})
-      }
       return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )
       })
     }
     case 'MOVE_DOWN': {
-      let target = state.rootNodes.indexOf(action.nodeId)
-      if (target > -1 && (target < state.rootNodes.length-1)) {
-        let target = state.rootNodes.indexOf(action.nodeId)
-        return Object.assign({}, state, {
-          rootNodes: swapInArray(state.rootNodes, target, target+1)})
-      }
       return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )

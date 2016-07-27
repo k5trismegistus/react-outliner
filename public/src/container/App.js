@@ -3,7 +3,7 @@ import RootOutline from '../components/RootOutline'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    rootNodes: state.nodes.rootNodes,
+    rootNodeId: state.nodes.rootNodeId,
     nodes: state.nodes.nodes
   }
 }
