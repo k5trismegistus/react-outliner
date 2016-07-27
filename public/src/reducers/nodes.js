@@ -86,16 +86,30 @@ const nodes = (state=test, action) => {
       if (derivedFrom.children.length > 0) {
         return Object.assign({}, state, {
             nodes: [
-              newNode, ...(state.nodes.map(n => {
+              ...(state.nodes.map(n => {
                 if (n.id == derivedFrom.id) {
-                  return Object.assign({}, derivedFrom, {children: [newNodeId, ...derivedFrom.children]})
+                  return Object.assign({}, n, { children: [newNodeId, ...derivedFrom.children] })
                 }
                 return n
               }
-            ))
+            )),
+            newNode
           ]
         })
       }
+      return Object.assign({}, state, {
+        nodes: [
+          ...(state.nodes.map(n => {
+            if (n.children.indexOf(derivedFrom.id) > -1){
+              let newChildren = n.children.concat()
+              newChildren.splice(n.children.indexOf(derivedFrom.id)+1, 0, newNodeId)
+              return Object.assign({}, n, { children: newChildren })
+            }
+            return n
+          })),
+          newNode
+        ]
+      })
 
     }
     case 'EDIT_NODE': {
