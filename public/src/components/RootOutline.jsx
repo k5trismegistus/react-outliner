@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NodeContainer from '../container/nodeContainer'
+import NodeContainer from '../containers/nodeContainer'
 
 export default class RootOutline extends Component {
 

@@ -25,19 +25,19 @@ const swapInArray = (array, sourceIdx, targetIdx) => {
 const node = (state, action) => {
   switch (action.type) {
     case 'COLLAPSE_NODE': {
-      if (state.id !== action.nodeId) {
+      if (state.id !== action.payload.nodeId) {
         return state
       }
       return Object.assign({}, state, {collapsed: true})
     }
     case 'UNCOLLAPSE_NODE': {
-      if (state.id !== action.nodeId) {
+      if (state.id !== action.payload.nodeId) {
         return state
       }
       return Object.assign({}, state, {collapsed: false})
     }
     case 'MOVE_UP': {
-      let target = state.children.indexOf(action.nodeId)
+      let target = state.children.indexOf(action.payload.nodeId)
       if (target > 0){
         return Object.assign({}, state, {
           children: swapInArray(state.children, target, target-1)
@@ -46,7 +46,7 @@ const node = (state, action) => {
       return state
     }
     case 'MOVE_DOWN': {
-      let target = state.children.indexOf(action.nodeId)
+      let target = state.children.indexOf(action.payload.nodeId)
       if ((target > -1) && (target < state.children.length-1) ){
         return Object.assign({}, state, {
           children: swapInArray(state.children, target, target+1)
@@ -69,20 +69,18 @@ const addChildTo = (nodes, nodeId) => {
   }))
 }
 
-
-
 const nodes = (state=test, action) => {
   switch (action.type) {
-    case 'ADD_NODE': {
+    case 'CREATE_NODE': {
       let newNodeId = uuid.v4()
       let newNode = {
         id: newNodeId,
-        text: action.text,
+        text: action.payload.text,
         children: [],
         collapsed: true
       }
 
-      let derivedFrom = findNodeById(state.nodes, action.nodeId)
+      let derivedFrom = findNodeById(state.nodes, action.payload.nodeId)
       if (derivedFrom.children.length > 0) {
         return Object.assign({}, state, {
             nodes: [

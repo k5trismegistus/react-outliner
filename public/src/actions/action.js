@@ -1,3 +1,4 @@
+export const CREATE_NODE = 'CREATE_NODE'
 export const ADD_NODE = 'ADD_NODE'
 export const EDIT_NODE = 'EDIT_NODE'
 export const DELETE_NODE = 'DELETE_NODE'
@@ -9,75 +10,137 @@ export const MOVE_DOWN = 'MOVE_DOWN'
 export const COLLAPSE_NODE = 'COLLAPSE_NODE'
 export const UNCOLLAPSE_NODE = 'UNCOLLAPSE_NODE'
 
+// This action is decomposed in Middleware.
+// Never reach to reducers
+// @params nodeId: Previously focused Node
+// @params text: Text of new Node
+export const createNode = (nodeId, text) => {
+  return {
+    type: CREATE_NODE,
+    payload: {
+      nodeId,
+      text
+    }
+  }
+}
+
+// Only add node to nodes list.
+// Only with this action, node will not be shown.
+// @params nodeId: ID of new node
+// @params text: Text of new Node
 export const addNode = (nodeId, text) => {
   return {
     type: ADD_NODE,
-    text,
-    nodeId
+    payload: {
+      nodeId,
+      text
+    }
   }
 }
 
-export const editNode = (text, nodeId) => {
+// @params nodeId: Child node ID
+// @params parentNodeId: Parent node ID
+// @params position: New child node should be inserted at
+export const insertChild = (nodeId, parentNodeId, position) => {
+  return {
+    type: INSERT_CHILD,
+    payload: {
+      payload: {
+        nodeId,
+        parentNode,
+        position
+      }
+    }
+  }
+}
+
+// @params nodeId: Node ID to be updated
+// @params text: Updated text content
+export const updateNode = (text, nodeId) => {
   return {
     type: EDIT_NODE,
-    text
+    payload: {
+      nodeId,
+      text
+    }
   }
 }
 
+// @params nodeId: Node ID to be deleted
 export const deleteNode = (nodeId) => {
   return {
     type: DELETE_NODE,
-    nodeId
+    payload: {
+      nodeId
+    }
   }
 }
 
 export const indentNode = (nodeId) => {
   return {
     type: INDENT_NODE,
-    nodeId
+    payload: {
+      nodeId
+    }
   }
 }
 
 export const unindentNode = (nodeId) => {
   return {
     type: UNINDENT_NODE,
-    nodeId
+    payload: {
+      nodeId
+    }
   }
 }
 
 export const moveUp = (nodeId) => {
   return {
     type: MOVE_UP,
-    nodeId
+    payload: {
+      nodeId
+    }
   }
 }
 
 export const moveDown = (nodeId) => {
   return {
     type: MOVE_DOWN,
-    nodeId
+    payload: {
+      nodeId
+    }
   }
 }
 
+// This action should be decomposed in middleware.
+// @params nodeId: Node ID to be moved
+// @params newParentId: New Parent node ID
+// @params newPrevId: New sibling node ID in previous position
 export const moveNode = (nodeId, newParentId, newPrevId) => {
   return {
     type: MOVE_NODE,
-    nodeId,
-    parentId,
-    prevId
+    payload: {
+      nodeId,
+      parentId,
+      prevId
+    }
   }
 }
 
 export const collapseNode = (nodeId) => {
   return {
     type: COLLAPSE_NODE,
-    nodeId
+    payload: {
+      nodeId
+    }
   }
 }
 
 export const uncollapseNode = (nodeId) => {
   return {
     type: UNCOLLAPSE_NODE,
-    nodeId
+    payload: {
+      nodeId
+    }
   }
 }
