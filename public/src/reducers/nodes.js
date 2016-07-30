@@ -24,18 +24,21 @@ const swapInArray = (array, sourceIdx, targetIdx) => {
 
 const node = (state, action) => {
   switch (action.type) {
+
     case 'COLLAPSE_NODE': {
       if (state.id !== action.payload.nodeId) {
         return state
       }
       return Object.assign({}, state, {collapsed: true})
     }
+
     case 'UNCOLLAPSE_NODE': {
       if (state.id !== action.payload.nodeId) {
         return state
       }
       return Object.assign({}, state, {collapsed: false})
     }
+
     case 'MOVE_UP': {
       let target = state.children.indexOf(action.payload.nodeId)
       if (target > 0){
@@ -45,6 +48,7 @@ const node = (state, action) => {
       }
       return state
     }
+
     case 'MOVE_DOWN': {
       let target = state.children.indexOf(action.payload.nodeId)
       if ((target > -1) && (target < state.children.length-1) ){
@@ -57,98 +61,80 @@ const node = (state, action) => {
   }
 }
 
-const findNodeById = (nodes, nodeId) => {
-  return (nodes.find(n => {
-    return (n.id == nodeId)
-  }))
-}
-
-const addChildTo = (nodes, nodeId) => {
-  return (nodes.find(n => {
-    return (n.children.indexOf(nodeId) > -1)
-  }))
-}
-
 const nodes = (state=test, action) => {
   switch (action.type) {
-    case 'CREATE_NODE': {
-      let newNodeId = uuid.v4()
-      let newNode = {
-        id: newNodeId,
-        text: action.payload.text,
-        children: [],
-        collapsed: true
-      }
 
-      let derivedFrom = findNodeById(state.nodes, action.payload.nodeId)
-      if (derivedFrom.children.length > 0) {
-        return Object.assign({}, state, {
-            nodes: [
-              ...(state.nodes.map(n => {
-                if (n.id == derivedFrom.id) {
-                  return Object.assign({}, n, { children: [newNodeId, ...derivedFrom.children] })
-                }
-                return n
-              }
-            )),
-            newNode
-          ]
-        })
-      }
+    case 'ADD_NODE': {
       return Object.assign({}, state, {
-        nodes: [
+        nodes: [...state.nodes, action.payload.newNode]
+      })
+    }
+
+    case 'INSERT_CHILD': {
+      return Object.assign({}, state, {nodes:
+        [
           ...(state.nodes.map(n => {
-            if (n.children.indexOf(derivedFrom.id) > -1){
+            if(n.id == action.payload.parentNodeId) {
               let newChildren = n.children.concat()
-              newChildren.splice(n.children.indexOf(derivedFrom.id)+1, 0, newNodeId)
+              newChildren.splice(action.payload.position, 0, action.payload.nodeId)
+              console.log(n.children)
+              console.log(newChildren)
               return Object.assign({}, n, { children: newChildren })
             }
             return n
-          })),
-          newNode
+          }))
         ]
       })
-
     }
+
     case 'EDIT_NODE': {
       return state
     }
+
     case 'DELETE_NODE': {
       return state
     }
+
     case 'INDENT_NODE': {
       return state
     }
+
     case 'UNINDENT_NODE': {
       return state
     }
+
     case 'MOVE_NODE':{
       return state
     }
+
     case 'MOVE_UP': {
       return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )
       })
     }
+
     case 'MOVE_DOWN': {
       return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )
       })
     }
+
     case 'COLLAPSE_NODE': {
         return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )
       })
     }
+
     case 'UNCOLLAPSE_NODE': {
         return Object.assign({}, state, {nodes: state.nodes.map( n =>
           node(n, action)
         )
       })
     }
+    
     default:
       return state
   }

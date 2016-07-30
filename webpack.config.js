@@ -10,9 +10,9 @@ module.exports = {
         filename: 'index.js'
     },
     devtool: 'source-map',
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin()
-    ],
+    // plugins: [
+    //     new webpack.optimize.UglifyJsPlugin()
+    // ],
     module: {
         loaders: [
             {

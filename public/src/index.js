@@ -1,11 +1,14 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import App from './containers/App'
 import rootReducer from './reducers/index'
+import { mwCreateNode } from './middlewares/createNode'
 
-let store = createStore(rootReducer, window.devToolsExtension && window.devToolsExtension())
+const store = applyMiddleware(
+  mwCreateNode
+)(createStore)(rootReducer, window.devToolsExtension && window.devToolsExtension());
 
 render(
   <Provider store={store}>

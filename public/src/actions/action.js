@@ -1,5 +1,6 @@
 export const CREATE_NODE = 'CREATE_NODE'
 export const ADD_NODE = 'ADD_NODE'
+export const INSERT_CHILD = 'INSERT_CHILD'
 export const EDIT_NODE = 'EDIT_NODE'
 export const DELETE_NODE = 'DELETE_NODE'
 export const INDENT_NODE = 'INDENT_NODE'
@@ -12,7 +13,7 @@ export const UNCOLLAPSE_NODE = 'UNCOLLAPSE_NODE'
 
 // This action is decomposed in Middleware.
 // Never reach to reducers
-// @params nodeId: Previously focused Node
+// @params nodeId: ID of new node
 // @params text: Text of new Node
 export const createNode = (nodeId, text) => {
   return {
@@ -26,14 +27,12 @@ export const createNode = (nodeId, text) => {
 
 // Only add node to nodes list.
 // Only with this action, node will not be shown.
-// @params nodeId: ID of new node
-// @params text: Text of new Node
-export const addNode = (nodeId, text) => {
+// @params newNode: New node as JS object
+export const addNode = (newNode) => {
   return {
     type: ADD_NODE,
     payload: {
-      nodeId,
-      text
+      newNode
     }
   }
 }
@@ -45,11 +44,9 @@ export const insertChild = (nodeId, parentNodeId, position) => {
   return {
     type: INSERT_CHILD,
     payload: {
-      payload: {
-        nodeId,
-        parentNode,
-        position
-      }
+      nodeId,
+      parentNodeId,
+      position
     }
   }
 }
