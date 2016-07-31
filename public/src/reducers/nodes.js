@@ -87,8 +87,18 @@ const nodes = (state=test, action) => {
       })
     }
 
-    case 'EDIT_NODE': {
-      return state
+    case 'UPDATE_NODE': {
+      console.log(action)
+      return Object.assign({}, state, { nodes:
+        [
+          ...(state.nodes.map(n => {
+            if (n.id == action.payload.nodeId) {
+              return Object.assign({}, n, { content: action.payload.text })
+            }
+            return n
+          }))
+        ]
+      })
     }
 
     case 'DELETE_NODE': {
@@ -134,7 +144,7 @@ const nodes = (state=test, action) => {
         )
       })
     }
-    
+
     default:
       return state
   }

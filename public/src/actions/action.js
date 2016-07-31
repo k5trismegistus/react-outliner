@@ -1,7 +1,8 @@
 export const CREATE_NODE = 'CREATE_NODE'
 export const ADD_NODE = 'ADD_NODE'
+export const UPDATE_NODE = 'UPDATE_NODE'
 export const INSERT_CHILD = 'INSERT_CHILD'
-export const EDIT_NODE = 'EDIT_NODE'
+export const REMOVE_CHILD = 'REMOVE_CHILD'
 export const DELETE_NODE = 'DELETE_NODE'
 export const INDENT_NODE = 'INDENT_NODE'
 export const UNINDENT_NODE = 'UNINDENT_NODE'
@@ -15,12 +16,13 @@ export const UNCOLLAPSE_NODE = 'UNCOLLAPSE_NODE'
 // Never reach to reducers
 // @params nodeId: ID of new node
 // @params text: Text of new Node
-export const createNode = (nodeId, text) => {
+export const createNode = (nodeId, startOffset, endOffset) => {
   return {
     type: CREATE_NODE,
     payload: {
       nodeId,
-      text
+      startOffset,
+      endOffset
     }
   }
 }
@@ -51,11 +53,21 @@ export const insertChild = (nodeId, parentNodeId, position) => {
   }
 }
 
+// @params nodeId: Child node ID should be removed from parent's 'children'
+export const removeChild = (nodeId) => {
+  return {
+    type: REMOVE_CHILD,
+    payload: {
+      nodeId
+    }
+  }
+}
+
 // @params nodeId: Node ID to be updated
 // @params text: Updated text content
-export const updateNode = (text, nodeId) => {
+export const updateNode = (nodeId, text) => {
   return {
-    type: EDIT_NODE,
+    type: UPDATE_NODE,
     payload: {
       nodeId,
       text

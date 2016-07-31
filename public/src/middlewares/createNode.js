@@ -4,6 +4,7 @@ import uuid from 'uuid'
 import {
   CREATE_NODE,
   addNode,
+  updateNode,
   insertChild
 } from '../actions/action.js'
 
@@ -21,11 +22,21 @@ const findParentNodeById = (nodes, nodeId) => {
 
 export const mwCreateNode = store => next => action => {
   if (action.type == CREATE_NODE) {
+    let nodes = store.getState().nodes.nodes
+    let derivedFrom = findNodeById(nodes, action.payload.nodeId)
+
+    // Update node derived from
+    let updateAction = updateNode(
+      action.payload.nodeId,
+      derivedFrom.content.slice(0, action.payload.startOffset)
+    )
+    next(updateAction)
+
     // Add node to nodes list
     let newNodeId = uuid.v4()
     let newNode = {
       id: newNodeId,
-      content: action.payload.text,
+      content: derivedFrom.content.slice(action.payload.endOffset),
       children: [],
       collapsed: true
     }
@@ -33,8 +44,6 @@ export const mwCreateNode = store => next => action => {
     next(addNodeAction)
 
     // Register node with parent node
-    let nodes = store.getState().nodes.nodes
-    let derivedFrom = findNodeById(nodes, action.payload.nodeId)
     if (derivedFrom.children.length > 0) {
       let insertChildAction = insertChild(newNodeId, derivedFrom.id, 0)
       next(insertChildAction)

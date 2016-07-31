@@ -17,8 +17,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNode: (nodeId, text) => {
-      dispatch(createNode(nodeId, text))
+    createNode: (nodeId, startOffset, endOffset) => {
+      dispatch(createNode(nodeId, startOffset, endOffset))
     },
     onNodeClick: (e) => {
     },

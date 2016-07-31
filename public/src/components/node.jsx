@@ -11,8 +11,11 @@ export default class Node extends Component {
   _onKeyDown(e) {
     // Add new node
     if (!e.shiftKey && e.keyCode == '13') {
+      let selection = window.getSelection()
+      let range = selection.getRangeAt(0)
+      console.log(range)
       e.preventDefault()
-      this.props.addNode(this.props.node.id, 'hello')
+      this.props.createNode(this.props.node.id, range.startOffset, range.endOffset)
       return
     }
     // Move to Upper Node
