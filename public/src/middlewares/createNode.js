@@ -6,7 +6,7 @@ import {
   addNode,
   updateNode,
   insertChild
-} from '../actions/action.js'
+} from '../actions/action'
 
 const findNodeById = (nodes, nodeId) => {
   return (nodes.find(n => {

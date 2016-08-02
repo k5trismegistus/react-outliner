@@ -76,9 +76,27 @@ const nodes = (state=test, action) => {
           ...(state.nodes.map(n => {
             if(n.id == action.payload.parentNodeId) {
               let newChildren = n.children.concat()
-              newChildren.splice(action.payload.position, 0, action.payload.nodeId)
-              console.log(n.children)
-              console.log(newChildren)
+              let position =　(
+                (action.payload.position > 0)
+                ? action.payload.action
+                : newChildren.length + action.payload.position + 1
+              )
+              newChildren.splice(position, 0, action.payload.nodeId)
+              return Object.assign({}, n, { children: newChildren })
+            }
+            return n
+          }))
+        ]
+      })
+    }
+
+    case 'REMOVE_CHILD': {
+      return Object.assign({}, state, {nodes:
+        [
+          ...(state.nodes.map(n => {
+            if (n.children.indexOf(action.payload.nodeId) > -1) {
+              let newChildren = n.children.concat()
+              newChildren.splice(n.children.indexOf(action.payload.nodeId), 1)
               return Object.assign({}, n, { children: newChildren })
             }
             return n

@@ -5,9 +5,11 @@ import { createStore, applyMiddleware } from 'redux'
 import App from './containers/App'
 import rootReducer from './reducers/index'
 import { mwCreateNode } from './middlewares/createNode'
+import { mwIndentNode } from './middlewares/indentNode'
 
 const store = applyMiddleware(
-  mwCreateNode
+  mwCreateNode,
+  mwIndentNode
 )(createStore)(rootReducer, window.devToolsExtension && window.devToolsExtension());
 
 render(

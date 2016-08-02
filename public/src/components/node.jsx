@@ -9,6 +9,11 @@ export default class Node extends Component {
   }
 
   _onKeyDown(e) {
+    // Indent node
+    if (e.keyCode == '9') {
+      e.preventDefault()
+      this.props.indentNode(this.props.node.id)
+    }
     // Add new node
     if (!e.shiftKey && e.keyCode == '13') {
       let selection = window.getSelection()
@@ -67,6 +72,10 @@ export default class Node extends Component {
   }
 
   _onClick(e) {
+  }
+
+  focus() {
+    console.log(this.refs)
   }
 
   render() {
