@@ -25,6 +25,9 @@ export const mwUnindentNode = store => next => action => {
 
     let currentParentNode = findParentNodeById(nodes, action.payload.nodeId)
     let newParentNode = findParentNodeById(nodes, currentParentNode.id)
+    if (!newParentNode){
+      return
+    }
     let position = newParentNode.children.indexOf(currentParentNode.id) + 1
     let insertChildAction = insertChild(action.payload.nodeId, newParentNode.id, position)
 

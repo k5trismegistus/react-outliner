@@ -79,14 +79,15 @@ export default class Node extends Component {
   _onClick(e) {
   }
 
-  focus() {
-    console.log(this.refs)
+  componentDidMount() {
+    this.refs.editableField.focus()
   }
 
   render() {
     return(
       <li onClick={ this.props.onNodeClick }>
         <div
+          ref='editableField'
           className="node"
           contentEditable
           onClick={ this._onClick.bind(this) }

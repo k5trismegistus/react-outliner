@@ -34,7 +34,7 @@ export const mwIndentNode = store => next => action => {
       return
     }
 
-    let insertChildAction = insertChild(action.payload.nodeId, prevSiblingId, -1)
+    let insertChildAction = insertChild(action.payload.nodeId, prevSibling.id, -1)
     next(removeChildAction)
     next(insertChildAction)
     return
