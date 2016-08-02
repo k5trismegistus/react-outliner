@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import Node from '../components/Node'
 import {
   indentNode,
+  unindentNode,
   createNode,
   collapseNode,
   uncollapseNode,
@@ -20,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     indentNode: (nodeId) => {
       dispatch(indentNode(nodeId))
+    },
+    unindentNode: (nodeId) => {
+      dispatch(unindentNode(nodeId))
     },
     createNode: (nodeId, startOffset, endOffset) => {
       dispatch(createNode(nodeId, startOffset, endOffset))

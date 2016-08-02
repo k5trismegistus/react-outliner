@@ -78,7 +78,7 @@ const nodes = (state=test, action) => {
               let newChildren = n.children.concat()
               let position =　(
                 (action.payload.position > 0)
-                ? action.payload.action
+                ? action.payload.position
                 : newChildren.length + action.payload.position + 1
               )
               newChildren.splice(position, 0, action.payload.nodeId)

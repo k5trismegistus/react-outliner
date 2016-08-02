@@ -6,10 +6,12 @@ import App from './containers/App'
 import rootReducer from './reducers/index'
 import { mwCreateNode } from './middlewares/createNode'
 import { mwIndentNode } from './middlewares/indentNode'
+import { mwUnindentNode } from './middlewares/unindentNode'
 
 const store = applyMiddleware(
   mwCreateNode,
-  mwIndentNode
+  mwIndentNode,
+  mwUnindentNode
 )(createStore)(rootReducer, window.devToolsExtension && window.devToolsExtension());
 
 render(

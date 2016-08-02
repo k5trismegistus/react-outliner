@@ -10,12 +10,17 @@ export default class Node extends Component {
 
   _onKeyDown(e) {
     // Indent node
-    if (e.keyCode == '9') {
+    if (!e.shiftKey && e.keyCode == '9') {
       e.preventDefault()
       this.props.indentNode(this.props.node.id)
     }
+    // Unindent node
+    else if (e.shiftKey && e.keyCode == '9') {
+      e.preventDefault()
+      this.props.unindentNode(this.props.node.id)
+    }
     // Add new node
-    if (!e.shiftKey && e.keyCode == '13') {
+    else if (!e.shiftKey && e.keyCode == '13') {
       let selection = window.getSelection()
       let range = selection.getRangeAt(0)
       console.log(range)
