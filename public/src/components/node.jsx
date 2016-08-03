@@ -12,12 +12,12 @@ export default class Node extends Component {
     // Indent node
     if (!e.shiftKey && e.keyCode == '9') {
       e.preventDefault()
-      this.props.indentNode(this.props.node.id)
+      this.props.indentNode(this.props.node.id, this.refs.editableField.textContent)
     }
     // Unindent node
     else if (e.shiftKey && e.keyCode == '9') {
       e.preventDefault()
-      this.props.unindentNode(this.props.node.id)
+      this.props.unindentNode(this.props.node.id, this.refs.editableField.textContent)
     }
     // Add new node
     else if (!e.shiftKey && e.keyCode == '13') {

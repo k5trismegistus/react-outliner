@@ -2,6 +2,7 @@
 
 import {
   INDENT_NODE,
+  updateNode,
   removeChild,
   insertChild
 } from '../actions/action'
@@ -25,8 +26,11 @@ const findPrevSiblingById = (nodes, nodeId) => {
 }
 
 export const mwIndentNode = store => next => action => {
-  let nodes = store.getState().nodes.nodes
   if (action.type == INDENT_NODE) {
+
+    let updateAction = updateNode(action.payload.nodeId, action.payload.text)
+
+    let nodes = store.getState().nodes.nodes
     let removeChildAction = removeChild(action.payload.nodeId)
 
     let prevSibling = findPrevSiblingById(nodes, action.payload.nodeId)
@@ -35,6 +39,7 @@ export const mwIndentNode = store => next => action => {
     }
 
     let insertChildAction = insertChild(action.payload.nodeId, prevSibling.id, -1)
+    next(updateAction)
     next(removeChildAction)
     next(insertChildAction)
     return

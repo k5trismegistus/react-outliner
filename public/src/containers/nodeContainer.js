@@ -19,11 +19,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    indentNode: (nodeId) => {
-      dispatch(indentNode(nodeId))
+    indentNode: (nodeId, text) => {
+      dispatch(indentNode(nodeId, text))
     },
-    unindentNode: (nodeId) => {
-      dispatch(unindentNode(nodeId))
+    unindentNode: (nodeId, text) => {
+      dispatch(unindentNode(nodeId, text))
     },
     createNode: (nodeId, startOffset, endOffset) => {
       dispatch(createNode(nodeId, startOffset, endOffset))

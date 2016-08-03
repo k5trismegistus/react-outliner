@@ -76,29 +76,37 @@ export const updateNode = (nodeId, text) => {
 }
 
 // @params nodeId: Node ID to be deleted
-export const deleteNode = (nodeId) => {
+// @params text: Remaining text to be appended to prev node
+export const deleteNode = (nodeId, text) => {
   return {
     type: DELETE_NODE,
     payload: {
-      nodeId
+      nodeId,
+      text
     }
   }
 }
 
-export const indentNode = (nodeId) => {
+// @params nodeId: Node ID to be indented
+// @params text: Current text of node
+export const indentNode = (nodeId, text) => {
   return {
     type: INDENT_NODE,
     payload: {
-      nodeId
+      nodeId,
+      text
     }
   }
 }
 
-export const unindentNode = (nodeId) => {
+// @params nodeId: Node ID to be unindented
+// @params text: Current text of node
+export const unindentNode = (nodeId, text) => {
   return {
     type: UNINDENT_NODE,
     payload: {
-      nodeId
+      nodeId,
+      text
     }
   }
 }

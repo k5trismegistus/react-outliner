@@ -2,6 +2,7 @@
 
 import {
   UNINDENT_NODE,
+  updateNode,
   removeChild,
   insertChild
  } from '../actions/action'
@@ -20,6 +21,9 @@ const findParentNodeById = (nodes, nodeId) => {
 
 export const mwUnindentNode = store => next => action => {
   if (action.type == UNINDENT_NODE) {
+
+    let updateAction = updateNode(action.payload.nodeId, action.payload.text)
+
     let nodes = store.getState().nodes.nodes
     let removeChildAction = removeChild(action.payload.nodeId)
 
@@ -31,6 +35,7 @@ export const mwUnindentNode = store => next => action => {
     let position = newParentNode.children.indexOf(currentParentNode.id) + 1
     let insertChildAction = insertChild(action.payload.nodeId, newParentNode.id, position)
 
+    next(updateAction)
     next(removeChildAction)
     next(insertChildAction)
   }
