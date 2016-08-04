@@ -4,6 +4,7 @@ export const UPDATE_NODE = 'UPDATE_NODE'
 export const INSERT_CHILD = 'INSERT_CHILD'
 export const REMOVE_CHILD = 'REMOVE_CHILD'
 export const DELETE_NODE = 'DELETE_NODE'
+export const REMOVE_NODE = 'REMOVE_NODE'
 export const INDENT_NODE = 'INDENT_NODE'
 export const UNINDENT_NODE = 'UNINDENT_NODE'
 export const MOVE_NODE = 'MOVE_NODE'
@@ -75,6 +76,8 @@ export const updateNode = (nodeId, text) => {
   }
 }
 
+// This action is decomposed in Middleware.
+// Never reach to reducers
 // @params nodeId: Node ID to be deleted
 // @params text: Remaining text to be appended to prev node
 export const deleteNode = (nodeId, text) => {
@@ -83,6 +86,15 @@ export const deleteNode = (nodeId, text) => {
     payload: {
       nodeId,
       text
+    }
+  }
+}
+
+export const removeNode = (nodeId) => {
+  return {
+    type: REMOVE_NODE,
+    payload: {
+      nodeId
     }
   }
 }

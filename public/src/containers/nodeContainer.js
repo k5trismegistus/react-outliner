@@ -4,6 +4,7 @@ import {
   indentNode,
   unindentNode,
   createNode,
+  deleteNode,
   collapseNode,
   uncollapseNode,
   moveUp,
@@ -27,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     createNode: (nodeId, startOffset, endOffset) => {
       dispatch(createNode(nodeId, startOffset, endOffset))
+    },
+    deleteNode: (nodeId, text) => {
+      dispatch(deleteNode(nodeId, text))
     },
     onNodeClick: (e) => {
     },

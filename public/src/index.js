@@ -7,11 +7,13 @@ import rootReducer from './reducers/index'
 import { mwCreateNode } from './middlewares/createNode'
 import { mwIndentNode } from './middlewares/indentNode'
 import { mwUnindentNode } from './middlewares/unindentNode'
+import { mwDeleteNode } from './middlewares/deleteNode'
 
 const store = applyMiddleware(
   mwCreateNode,
   mwIndentNode,
-  mwUnindentNode
+  mwUnindentNode,
+  mwDeleteNode
 )(createStore)(rootReducer, window.devToolsExtension && window.devToolsExtension());
 
 render(

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import $ from 'jquery'
-import ChildrenNodesList from './ChildrenNodesList'
+import ChildrenNodesListContainer from '../containers/childrenNodesListContainer'
 
 export default class Node extends Component {
 
@@ -27,6 +27,15 @@ export default class Node extends Component {
       e.preventDefault()
       this.props.createNode(this.props.node.id, range.startOffset, range.endOffset)
       return
+    }
+    // Delete node
+    else if (e.keyCode == '8') {
+      const selection = window.getSelection()
+      const range = selection.getRangeAt(0)
+      if (range.startOffset == 0 && range.endOffset == 0) {
+        e.preventDefault
+        this.props.deleteNode(this.props.node.id, this.refs.editableField.textContent)
+      }
     }
     // Move to Upper Node
     else if ((!e.ctrlKey && !e.metaKey) && e.keyCode == '38') {
@@ -98,7 +107,7 @@ export default class Node extends Component {
         {
           (() => {
             if ((this.props.node.children.length > 0) && this.props.node.collapsed) {
-              return <ChildrenNodesList nodes={ this.props.nodes } children={ this.props.node.children } />
+              return <ChildrenNodesListContainer key={ this.props.node.id } children={ this.props.node.children } />
             }
           })()
         }

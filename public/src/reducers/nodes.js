@@ -106,7 +106,6 @@ const nodes = (state=test, action) => {
     }
 
     case 'UPDATE_NODE': {
-      console.log(action)
       return Object.assign({}, state, { nodes:
         [
           ...(state.nodes.map(n => {
@@ -119,8 +118,14 @@ const nodes = (state=test, action) => {
       })
     }
 
-    case 'DELETE_NODE': {
-      return state
+    case 'REMOVE_NODE': {
+      return Object.assign({}, state, { nodes:
+        [
+          ...(state.nodes.filter(n => {
+            return (n.id != action.payload.nodeId)
+          }))
+        ]
+      })
     }
 
     case 'INDENT_NODE': {
