@@ -1,16 +1,24 @@
 import { connect } from 'react-redux'
 import ChildrenNodesList from '../components/ChildrenNodesList'
 
-const mapStateToProps = (state, ownProps) => {
-    state.nodes.nodes.filter(n => {
-      return (ownProps.children.indexOf(n.id) > -1)
-    })
+const findNodeById = (nodes, nodeId) => {
+  return (nodes.find(n => {
+    return (n.id == nodeId)
+  }))
+}
 
+const childrenNodes = (state, parentNodeId) => {
+  let childrenIds = state.children.children.find(c =>
+    (c.id === parentNodeId)
+  ).childrenIds
+  return childrenIds.map(cid =>
+    (findNodeById(state.nodes.nodes, cid))
+  )
+}
+
+const mapStateToProps = (state, ownProps) => {
   return {
-    nodes: state.nodes.nodes.filter(n => {
-      return (ownProps.children.indexOf(n.id) > -1)
-    }),
-    children: ownProps.children
+    childrenNodes: childrenNodes(state, ownProps.parentNodeId)
   }
 }
 

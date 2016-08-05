@@ -1,12 +1,9 @@
 // Decompose 'createNode' action into some simple Actions
 
 import uuid from 'uuid'
-import {
-  CREATE_NODE,
-  addNode,
-  updateNode,
-  insertChild
-} from '../actions/action'
+import { CREATE_NODE } from '../actions/compositeActions'
+import { addNode, updateNode } from '../actions/nodes'
+import { insertChild } from '../actions/children'
 
 const findNodeById = (nodes, nodeId) => {
   return (nodes.find(n => {

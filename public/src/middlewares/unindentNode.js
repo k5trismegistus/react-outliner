@@ -1,11 +1,8 @@
 // Decompose 'INDENT_NODE' action into some simple Actions
 
-import {
-  UNINDENT_NODE,
-  updateNode,
-  removeChild,
-  insertChild
- } from '../actions/action'
+import { UNINDENT_NODE } from '../actions/compositeActions'
+import { updateNode } from '../actions/nodes'
+import { removeChild, insertChild } from '../actions/children'
 
 const findNodeById = (nodes, nodeId) => {
   return (nodes.find(n => {

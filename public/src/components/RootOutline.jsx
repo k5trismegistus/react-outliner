@@ -11,18 +11,9 @@ export default class RootOutline extends Component {
     return (
       <ul>
         {
-          (() => {
-            let root = this.props.nodes.find(n => {
-              return(n.id == this.props.rootNodeId)
-            })
-            return (root.children.map(nodeId => {
-                let node = this.props.nodes.find((n) => {
-                  return(n.id == nodeId)
-                })
-                return <NodeContainer key={node.id} node={node} />
-              })
-            )
-          })()
+          this.props.topLevelNodes.map(tln => {
+            return <NodeContainer key={tln.id} node={tln} />
+          })
         }
       </ul>
     )

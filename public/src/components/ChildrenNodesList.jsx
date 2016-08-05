@@ -8,14 +8,14 @@ export default class ChildrenNodesList extends Component {
   }
 
   render() {
+    if (this.props.childrenNodes.length === 0) {
+      return null
+    }
     return (
       <ul>
         {
-          this.props.children.map(childId => {
-            let node = this.props.nodes.find((n) => {
-              return(n.id == childId)
-            })
-            return <NodeContainer key={node.id} node={node} />
+          this.props.childrenNodes.map(n => {
+            return <NodeContainer key={ n.id } node={ n } />
           })
         }
       </ul>

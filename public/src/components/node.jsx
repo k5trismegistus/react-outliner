@@ -104,17 +104,10 @@ export default class Node extends Component {
           onKeyDown={ this._onKeyDown.bind(this) } >
           { this.props.node.content }
         </div>
-        {
-          (() => {
-            if ((this.props.node.children.length > 0) && this.props.node.collapsed) {
-              return <ChildrenNodesListContainer key={ this.props.node.id } children={ this.props.node.children } />
-            }
-          })()
-        }
+        <ChildrenNodesListContainer
+          key={ this.props.node.id }
+          parentNodeId={ this.props.node.id } />
       </li>
-      // {
-      //     return <ChildrenNodesList nodes={this.props.ndoes} children={this.props.node.children} />
-      // }
     )
   }
 }
