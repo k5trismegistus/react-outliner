@@ -18,6 +18,7 @@ const childrenNodes = (state, parentNodeId) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    show: ownProps.show,
     childrenNodes: childrenNodes(state, ownProps.parentNodeId)
   }
 }

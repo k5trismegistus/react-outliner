@@ -8,7 +8,7 @@ export default class ChildrenNodesList extends Component {
   }
 
   render() {
-    if (this.props.childrenNodes.length === 0) {
+    if ((this.props.childrenNodes.length === 0) || !this.props.show) {
       return null
     }
     return (

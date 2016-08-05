@@ -106,6 +106,7 @@ export default class Node extends Component {
         </div>
         <ChildrenNodesListContainer
           key={ this.props.node.id }
+          show={ this.props.node.collapsed }
           parentNodeId={ this.props.node.id } />
       </li>
     )
