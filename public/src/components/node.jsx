@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import $ from 'jquery'
 import ChildrenNodesListContainer from '../containers/childrenNodesListContainer'
 
 export default class Node extends Component {

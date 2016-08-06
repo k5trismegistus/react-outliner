@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import nodes from './nodes'
-import children from './children'
+import relations from './relations'
 
 const rootReducer = combineReducers({
   nodes,
-  children
+  relations
 })
 
 export default rootReducer

@@ -9,7 +9,7 @@ const findNodeById = (nodes, nodeId) => {
 
 const topNodes = (state) => {
   const rootNodeId = state.nodes.rootNodeId
-  const rootChildrenIds = state.children.children.find(c =>
+  const rootChildrenIds = state.relations.relations.find(c =>
     (c.id === rootNodeId)
   ).childrenIds
   return rootChildrenIds.map(rcid =>

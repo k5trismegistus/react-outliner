@@ -2,7 +2,7 @@
 
 import { INDENT_NODE } from '../actions/compositeActions'
 import { updateNode } from '../actions/nodes'
-import { removeChild, insertChild } from '../actions/children'
+import { removeChild, insertChild } from '../actions/relations'
 
 const findNodeById = (nodes, nodeId) => {
   return (nodes.find(n => {

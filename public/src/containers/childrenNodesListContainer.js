@@ -8,7 +8,7 @@ const findNodeById = (nodes, nodeId) => {
 }
 
 const childrenNodes = (state, parentNodeId) => {
-  let childrenIds = state.children.children.find(c =>
+  let childrenIds = state.relations.relations.find(c =>
     (c.id === parentNodeId)
   ).childrenIds
   return childrenIds.map(cid =>

@@ -3,17 +3,11 @@
 import uuid from 'uuid'
 import { CREATE_NODE } from '../actions/compositeActions'
 import { addNode, updateNode } from '../actions/nodes'
-import { insertChild } from '../actions/children'
+import { insertChild } from '../actions/relations'
 
 const findNodeById = (nodes, nodeId) => {
   return (nodes.find(n => {
     return (n.id == nodeId)
-  }))
-}
-
-const findParentNodeById = (nodes, nodeId) => {
-  return (nodes.find(n => {
-    return (n.children.indexOf(nodeId) > -1)
   }))
 }
 
@@ -34,11 +28,18 @@ export const mwCreateNode = store => next => action => {
     let newNode = {
       id: newNodeId,
       content: derivedFrom.content.slice(action.payload.endOffset),
-      children: [],
       collapsed: true
     }
     let addNodeAction = addNode(newNode)
     next(addNodeAction)
+
+    // Add relation to children
+    const newRelation = {
+      id: newNodeId,
+      childrenIds: []
+    }
+    const addNewRelationAction = addChild(newRelation)
+    next(addNewRelationAction)
 
     // Register node with parent node
     if (derivedFrom.children.length > 0) {

@@ -1,5 +1,5 @@
 const test = {
-  children: [
+  relations: [
     { id: 999 , childrenIds: [0, 3, 4, 5] },
     { id: 0 , childrenIds: [1] },
     { id: 1 , childrenIds: [2] },
@@ -19,36 +19,36 @@ const swapInArray = (array, sourceIdx, targetIdx) => {
   return copiedArray
 }
 
-const child = (state, action) => {
+const relation = (state, action) => {
   switch (action.type) {
-    case 'INSERT_CHILD': {
+    case 'INSERT_RELATION': {
       if (state.id !==  !action.payload.parentNodeId) {
         return state
       }
-      let newChildren = state.children.concat()
+      let newChildrenIds = state.childrenIds.concat()
       let position =　(
         (action.payload.position > 0)
         ? action.payload.position
-        : newChildren.length + action.payload.position + 1)
-      newChildren.splice(position, 0, action.payload.nodeId)
-      return Object.assign({}, state, { children: newChildren })
+        : newChildrenIds.length + action.payload.position + 1)
+      newChildrenIds.splice(position, 0, action.payload.nodeId)
+      return Object.assign({}, state, { childrenIds: newChildrenIds })
     }
 
     case 'MOVE_UP': {
-      let target = state.children.indexOf(action.payload.nodeId)
+      let target = state.childrenIds.indexOf(action.payload.nodeId)
       if (target > 0){
         return Object.assign({}, state, {
-          children: swapInArray(state.children, target, target-1)
+          relations: swapInArray(state.childrenIds, target, target-1)
         })
       }
       return state
     }
 
     case 'MOVE_DOWN': {
-      let target = state.children.indexOf(action.payload.nodeId)
-      if ((target > -1) && (target < state.children.length-1) ){
+      let target = state.childrenIds.indexOf(action.payload.nodeId)
+      if ((target > -1) && (target < state.childrenIds.length-1) ){
         return Object.assign({}, state, {
-          children: swapInArray(state.children, target, target+1)
+          relations: swapInArray(state.childrenIds, target, target+1)
         })
       }
       return state
@@ -60,17 +60,24 @@ const child = (state, action) => {
   }
 }
 
-const children = (state=test, action) => {
+const relations = (state=test, action) => {
   switch (action.type) {
-    case 'INSERT_CHILD': {
-      return Object.assign({}, state, { children: state.children.map(c =>
+
+    case 'ADD_RELATION': {
+      return Object.assign({}, state, {
+        relations: [...state.relations.relatons, action.payload.newRelation]
+      })
+    }
+
+    case 'INSERT_RELATION': {
+      return Object.assign({}, state, { relations: state.relations.map(c =>
         node(c, action)
       )})
     }
 
-    case 'REMOVE_CHILD': {
-      return Object.assign({}, state, { children:
-        [...(state.children).map(c => {
+    case 'REMOVE_RELATION': {
+      return Object.assign({}, state, {
+        relations: [...(state.relations).map(c => {
           const pos = c.indexOf(action.payload.nodeId)
           if (pos == -1) {
             return c.concat().splice(pos, 1)
@@ -92,7 +99,7 @@ const children = (state=test, action) => {
     }
 
     case 'MOVE_DOWN': {
-      return Object.assign({}, state, {nodes: state.nodes.map( n =>
+      return Object.assign({}, state, { relations: state.nodes.map( n =>
           node(n, action)
         )
       })
@@ -104,4 +111,4 @@ const children = (state=test, action) => {
   }
 }
 
-export default children
+export default relations

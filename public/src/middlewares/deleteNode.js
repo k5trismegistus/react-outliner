@@ -2,7 +2,7 @@
 
 import { DELETE_NODE } from '../actions/compositeActions'
 import { removeNode } from '../actions/nodes'
-import { removeChild } from '../actions/children'
+import { removeChild } from '../actions/relations'
 
 export const mwDeleteNode = store => next => action => {
   if (action.type != DELETE_NODE) {
