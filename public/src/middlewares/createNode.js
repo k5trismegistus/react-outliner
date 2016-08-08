@@ -3,18 +3,32 @@
 import uuid from 'uuid'
 import { CREATE_NODE } from '../actions/compositeActions'
 import { addNode, updateNode } from '../actions/nodes'
-import { insertChild } from '../actions/relations'
+import { addRelation, insertRelation, removeRelation } from '../actions/relations'
 
 const findNodeById = (nodes, nodeId) => {
   return (nodes.find(n => {
-    return (n.id == nodeId)
+    return (n.id === nodeId)
+  }))
+}
+
+const findRelationById = (relations, nodeId) => {
+  return (relations.find(r => {
+    return (r.id === nodeId)
+  }))
+}
+
+const findParentsRelationById = (relations, nodeId) => {
+  return (relations.find(r => {
+    return (r.childrenIds.indexOf(nodeId) > -1)
   }))
 }
 
 export const mwCreateNode = store => next => action => {
   if (action.type == CREATE_NODE) {
-    let nodes = store.getState().nodes.nodes
-    let derivedFrom = findNodeById(nodes, action.payload.nodeId)
+    const nodes = store.getState().nodes.nodes
+    const derivedFrom = findNodeById(nodes, action.payload.nodeId)
+    const relations = store.getState().relations.relations
+    const derivedFromRelations = findRelationById(relations, action.payload.nodeId)
 
     // Update node derived from
     let updateAction = updateNode(
@@ -38,18 +52,18 @@ export const mwCreateNode = store => next => action => {
       id: newNodeId,
       childrenIds: []
     }
-    const addNewRelationAction = addChild(newRelation)
+    const addNewRelationAction = addRelation(newRelation)
     next(addNewRelationAction)
 
     // Register node with parent node
-    if (derivedFrom.children.length > 0) {
-      let insertChildAction = insertChild(newNodeId, derivedFrom.id, 0)
-      next(insertChildAction)
+    if (derivedFromRelations.childrenIds.length > 0) {
+      let insertRelationAction = insertRelation(newNodeId, derivedFrom.id, 0)
+      next(insertRelationAction)
     } else {
-      let parent = findParentNodeById(nodes, derivedFrom.id)
-      let position = parent.children.indexOf(derivedFrom.id) + 1
-      let insertChildAction = insertChild(newNodeId, parent.id, position)
-      next(insertChildAction)
+      let parentsRelations = findParentsRelationById(relations, derivedFrom.id)
+      let position = parentsRelations.childrenIds.indexOf(derivedFrom.id) + 1
+      let insertRelationAction = insertRelation(newNodeId, parentsRelations.id, position)
+      next(insertRelationAction)
     }
     return
   }

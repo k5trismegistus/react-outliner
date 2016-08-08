@@ -22,7 +22,7 @@ const swapInArray = (array, sourceIdx, targetIdx) => {
 const relation = (state, action) => {
   switch (action.type) {
     case 'INSERT_RELATION': {
-      if (state.id !==  !action.payload.parentNodeId) {
+      if (state.id !==  action.payload.parentNodeId) {
         return state
       }
       let newChildrenIds = state.childrenIds.concat()
@@ -31,6 +31,8 @@ const relation = (state, action) => {
         ? action.payload.position
         : newChildrenIds.length + action.payload.position + 1)
       newChildrenIds.splice(position, 0, action.payload.nodeId)
+      console.log(state)
+      console.log(newChildrenIds)
       return Object.assign({}, state, { childrenIds: newChildrenIds })
     }
 
@@ -64,14 +66,15 @@ const relations = (state=test, action) => {
   switch (action.type) {
 
     case 'ADD_RELATION': {
+      console.log(state)
       return Object.assign({}, state, {
-        relations: [...state.relations.relatons, action.payload.newRelation]
+        relations: [...state.relations, action.payload.newRelation]
       })
     }
 
     case 'INSERT_RELATION': {
-      return Object.assign({}, state, { relations: state.relations.map(c =>
-        node(c, action)
+      return Object.assign({}, state, { relations: state.relations.map(r =>
+        relation(r, action)
       )})
     }
 
