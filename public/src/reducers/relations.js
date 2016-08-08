@@ -31,8 +31,6 @@ const relation = (state, action) => {
         ? action.payload.position
         : newChildrenIds.length + action.payload.position + 1)
       newChildrenIds.splice(position, 0, action.payload.nodeId)
-      console.log(state)
-      console.log(newChildrenIds)
       return Object.assign({}, state, { childrenIds: newChildrenIds })
     }
 
@@ -66,7 +64,6 @@ const relations = (state=test, action) => {
   switch (action.type) {
 
     case 'ADD_RELATION': {
-      console.log(state)
       return Object.assign({}, state, {
         relations: [...state.relations, action.payload.newRelation]
       })
@@ -80,12 +77,24 @@ const relations = (state=test, action) => {
 
     case 'REMOVE_RELATION': {
       return Object.assign({}, state, {
-        relations: [...(state.relations).map(c => {
-          const pos = c.indexOf(action.payload.nodeId)
-          if (pos == -1) {
-            return c.concat().splice(pos, 1)
+        relations: [...(state.relations).filter(r => {
+          return (r.id !== action.payload.nodeId)
+        })]
+      })
+    }
+
+    case 'UNREGISTER_RELATION': {
+      return Object.assign({}, state, {
+        relations: [...(state.relations).map(r => {
+          const pos = r.childrenIds.indexOf(action.payload.nodeId)
+          if (pos !== -1) {
+            let newChildrenIds = r.childrenIds.concat()
+            newChildrenIds.splice(pos, 1)
+            return Object.assign({}, r, {
+              childrenIds: newChildrenIds
+            })
           }
-          return c
+          return r
         })]
       })
     }

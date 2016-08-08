@@ -1,6 +1,7 @@
 export const ADD_RELATION = 'ADD_RELATION'
 export const INSERT_RELATION = 'INSERT_RELATION'
 export const REMOVE_RELATION = 'REMOVE_RELATION'
+export const UNREGISTER_RELATION = 'UNREGISTER_RELATION'
 export const MOVE_UP = 'MOVE_UP'
 export const MOVE_DOWN = 'MOVE_DOWN'
 export const MOVE_NODE = 'MOVE_NODE'
@@ -33,6 +34,15 @@ export const insertRelation = (nodeId, parentNodeId, position) => {
 export const removeRelation = (nodeId) => {
   return {
     type: REMOVE_RELATION,
+    payload: {
+      nodeId
+    }
+  }
+}
+
+export const unregisterRelation = (nodeId) => {
+  return {
+    type: UNREGISTER_RELATION,
     payload: {
       nodeId
     }

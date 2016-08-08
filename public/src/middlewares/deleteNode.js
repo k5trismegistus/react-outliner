@@ -2,16 +2,19 @@
 
 import { DELETE_NODE } from '../actions/compositeActions'
 import { removeNode } from '../actions/nodes'
-import { removeChild } from '../actions/relations'
+import { removeRelation, unregisterRelation } from '../actions/relations'
 
 export const mwDeleteNode = store => next => action => {
   if (action.type != DELETE_NODE) {
     next(action)
     return
   }
-  const removeChildAction = removeChild(action.payload.nodeId)
-  const removeNodeAction = removeNode(action.payload.nodeId)
 
-  next(removeChildAction)
+  const removeNodeAction = removeNode(action.payload.nodeId)
+  const removeRelationAction = removeRelation(action.payload.nodeId)
+  const unregisterRelationAction = unregisterRelation(action.payload.nodeId)
+
   next(removeNodeAction)
+  next(removeRelationAction)
+  next(unregisterRelationAction)
 }
