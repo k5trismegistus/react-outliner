@@ -7,6 +7,10 @@ export default class Node extends Component {
     super(props)
   }
 
+  _onBlur(e) {
+    this.props.updateNode(this.props.node.id, this.refs.editableField.textContent)
+  }
+
   _onKeyDown(e) {
     // Indent node
     if (!e.shiftKey && e.keyCode == '9') {
@@ -99,7 +103,7 @@ export default class Node extends Component {
           className="node"
           contentEditable
           onClick={ this._onClick.bind(this) }
-          onBlur={ this.props.onNodeBlur }
+          onBlur={ this._onBlur.bind(this) }
           onKeyDown={ this._onKeyDown.bind(this) } >
           { this.props.node.content }
         </div>

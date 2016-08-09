@@ -4,12 +4,6 @@ import { UNINDENT_NODE } from '../actions/compositeActions'
 import { updateNode } from '../actions/nodes'
 import { unregisterRelation, insertRelation } from '../actions/relations'
 
-const findNodeById = (nodes, nodeId) => {
-  return (nodes.find(n => {
-    return (n.id == nodeId)
-  }))
-}
-
 const findParentRelationById = (relations, nodeId) => {
   return (relations.find(r => {
     return (r.childrenIds.indexOf(nodeId) > -1)
