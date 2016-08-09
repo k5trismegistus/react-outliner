@@ -2,43 +2,43 @@
 
 import { INDENT_NODE } from '../actions/compositeActions'
 import { updateNode } from '../actions/nodes'
-import { removeChild, insertChild } from '../actions/relations'
+import { unregisterRelation, insertRelation } from '../actions/relations'
 
-const findNodeById = (nodes, nodeId) => {
-  return (nodes.find(n => {
-    return (n.id == nodeId)
+const findRelationById = (relations, nodeId) => {
+  return (relations.find(r => {
+    return (r.id === nodeId)
   }))
 }
 
-const findParentNodeById = (nodes, nodeId) => {
-  return (nodes.find(n => {
-    return (n.children.indexOf(nodeId) > -1)
+const findParentRelationById = (relations, nodeId) => {
+  return (relations.find(r => {
+    return (r.childrenIds.indexOf(nodeId) > -1)
   }))
 }
 
-const findPrevSiblingById = (nodes, nodeId) => {
-  let parent = findParentNodeById(nodes, nodeId)
-  let prevSiblingId = parent.children[parent.children.indexOf(nodeId) - 1]
-  return findNodeById(nodes, prevSiblingId)
+const findPrevSiblingRelationById = (relations, nodeId) => {
+  let parent = findParentRelationById(relations, nodeId)
+  let prevSiblingId = parent.childrenIds[parent.childrenIds.indexOf(nodeId) - 1]
+  return findRelationById(relations, prevSiblingId)
 }
 
 export const mwIndentNode = store => next => action => {
   if (action.type == INDENT_NODE) {
 
-    let updateAction = updateNode(action.payload.nodeId, action.payload.text)
+    const updateAction = updateNode(action.payload.nodeId, action.payload.text)
 
-    let nodes = store.getState().nodes.nodes
-    let removeChildAction = removeChild(action.payload.nodeId)
+    const relations = store.getState().relations.relations
+    const unregisterRelationAction = unregisterRelation(action.payload.nodeId)
 
-    let prevSibling = findPrevSiblingById(nodes, action.payload.nodeId)
-    if (!prevSibling) {
+    const prevSiblingRelation = findPrevSiblingRelationById(relations, action.payload.nodeId)
+    if (!prevSiblingRelation) {
       return
     }
 
-    let insertChildAction = insertChild(action.payload.nodeId, prevSibling.id, -1)
+    const insertRelationAction = insertRelation(action.payload.nodeId, prevSiblingRelation.id, -1)
     next(updateAction)
-    next(removeChildAction)
-    next(insertChildAction)
+    next(unregisterRelationAction)
+    next(insertRelationAction)
     return
   }
   next(action)

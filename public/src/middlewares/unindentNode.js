@@ -2,7 +2,7 @@
 
 import { UNINDENT_NODE } from '../actions/compositeActions'
 import { updateNode } from '../actions/nodes'
-import { removeChild, insertChild } from '../actions/relations'
+import { unregisterRelation, insertRelation } from '../actions/relations'
 
 const findNodeById = (nodes, nodeId) => {
   return (nodes.find(n => {
@@ -10,31 +10,31 @@ const findNodeById = (nodes, nodeId) => {
   }))
 }
 
-const findParentNodeById = (nodes, nodeId) => {
-  return (nodes.find(n => {
-    return (n.children.indexOf(nodeId) > -1)
+const findParentRelationById = (relations, nodeId) => {
+  return (relations.find(r => {
+    return (r.childrenIds.indexOf(nodeId) > -1)
   }))
 }
 
 export const mwUnindentNode = store => next => action => {
   if (action.type == UNINDENT_NODE) {
 
-    let updateAction = updateNode(action.payload.nodeId, action.payload.text)
+    const updateAction = updateNode(action.payload.nodeId, action.payload.text)
 
-    let nodes = store.getState().nodes.nodes
-    let removeChildAction = removeChild(action.payload.nodeId)
+    const relations = store.getState().relations.relations
+    const unregisterRelationAction = unregisterRelation(action.payload.nodeId)
 
-    let currentParentNode = findParentNodeById(nodes, action.payload.nodeId)
-    let newParentNode = findParentNodeById(nodes, currentParentNode.id)
-    if (!newParentNode){
+    const currentParentRelation = findParentRelationById(relations, action.payload.nodeId)
+    const newParentRelation = findParentRelationById(relations, currentParentRelation.id)
+    if (!newParentRelation){
       return
     }
-    let position = newParentNode.children.indexOf(currentParentNode.id) + 1
-    let insertChildAction = insertChild(action.payload.nodeId, newParentNode.id, position)
+    const position = newParentRelation.childrenIds.indexOf(currentParentRelation.id) + 1
+    const insertRelationAction = insertRelation(action.payload.nodeId, newParentRelation.id, position)
 
     next(updateAction)
-    next(removeChildAction)
-    next(insertChildAction)
+    next(unregisterRelationAction)
+    next(insertRelationAction)
   }
   next(action)
 }

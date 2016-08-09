@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import Node from '../components/Node'
-import { createNode, deleteNode } from '../actions/compositeActions'
+import { createNode, deleteNode, indentNode, unindentNode } from '../actions/compositeActions'
 import { collapseNode, uncollapseNode } from '../actions/nodes'
-import { moveUp, moveDown, indentNode, unindentNode } from '../actions/relations'
+import { moveUp, moveDown } from '../actions/relations'
 
 const mapStateToProps = (state, ownProps) => {
   return {
