@@ -12,6 +12,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    moveNode: (nodeId, targetId) => {
+      console.log(nodeId, targetId)
+    },
     updateNode: (nodeId, text) => {
       dispatch(updateNode(nodeId, text))
     },

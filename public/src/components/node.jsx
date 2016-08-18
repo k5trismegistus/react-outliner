@@ -1,7 +1,46 @@
 import React, { Component } from 'react'
+import { DropTarget, DragSource } from 'react-dnd'
 import ChildrenNodesListContainer from '../containers/childrenNodesListContainer'
 
-export default class Node extends Component {
+const nodeSource = {
+  beginDrag: (props, monitor, component) => {
+    return { id: props.node.id}
+  },
+  endDrag: (props, monitor, component) => {
+    if (!monitor.didDrop()) {
+      return
+    }
+
+    const item = monitor.getItem()
+    const dropResult = monitor.getDropResult()
+    props.moveNode(props.node.id, dropResult.id)
+    return { id: props.id }
+  }
+}
+const collectSource = (connect, monitor) => {
+  return {
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
+    isDragging: monitor.isDragging()
+  }
+}
+
+const nodeTarget = {
+  drop: (props, monitor, component) => {
+    const hasDroppedOnChild = monitor.didDrop()
+    if (hasDroppedOnChild) {
+      return
+    }
+    return { id: props.node.id }
+  }
+}
+const collectTarget = (connect) => {
+  return {
+    connectDropTarget: connect.dropTarget()
+  }
+}
+
+class Node extends Component {
 
   constructor(props) {
     super(props)
@@ -96,8 +135,12 @@ export default class Node extends Component {
   }
 
   render() {
-    return(
+    const { connectDragSource, connectDragPreview, isDragging } = this.props
+    return this.props.connectDragPreview(this.props.connectDropTarget(
       <li onClick={ this.props.onNodeClick }>
+        { this.props.connectDragSource(
+          <div>@</div>
+        ) }
         <div
           ref='editableField'
           className="node"
@@ -112,6 +155,10 @@ export default class Node extends Component {
           show={ this.props.node.collapsed }
           parentNodeId={ this.props.node.id } />
       </li>
-    )
+    ))
   }
 }
+
+export default DragSource('Node', nodeSource, collectSource)(
+  DropTarget('Node', nodeTarget, collectTarget)(Node)
+)

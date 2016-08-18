@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 import NodeContainer from '../containers/nodeContainer'
 
-export default class RootOutline extends Component {
+class RootOutline extends Component {
 
   constructor(props) {
     super(props)
@@ -18,5 +20,6 @@ export default class RootOutline extends Component {
       </ul>
     )
   }
-
 }
+
+export default DragDropContext(HTML5Backend)(RootOutline)
