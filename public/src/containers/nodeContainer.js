@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Node from '../components/Node'
-import { createNode, deleteNode, indentNode, unindentNode } from '../actions/compositeActions'
+import { moveNode, createNode, deleteNode, indentNode, unindentNode } from '../actions/compositeActions'
 import { updateNode, collapseNode, uncollapseNode } from '../actions/nodes'
 import { moveUp, moveDown } from '../actions/relations'
 
@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     moveNode: (nodeId, targetId) => {
-      console.log(nodeId, targetId)
+      dispatch(moveNode(nodeId, targetId))
     },
     updateNode: (nodeId, text) => {
       dispatch(updateNode(nodeId, text))

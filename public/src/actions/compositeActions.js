@@ -35,13 +35,12 @@ export const deleteNode = (nodeId, text) => {
 
 // @params newParentId: New Parent node ID
 // @params newPrevId: New sibling node ID in previous position
-export const moveNode = (nodeId, newParentId, newPrevId) => {
+export const moveNode = (nodeId, targetId) => {
   return {
     type: MOVE_NODE,
     payload: {
       nodeId,
-      parentId,
-      prevId
+      targetId
     }
   }
 }

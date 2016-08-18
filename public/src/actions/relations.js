@@ -4,7 +4,6 @@ export const REMOVE_RELATION = 'REMOVE_RELATION'
 export const UNREGISTER_RELATION = 'UNREGISTER_RELATION'
 export const MOVE_UP = 'MOVE_UP'
 export const MOVE_DOWN = 'MOVE_DOWN'
-export const MOVE_NODE = 'MOVE_NODE'
 
 // @params newRelation: Object
 export const addRelation = (newRelation) => {

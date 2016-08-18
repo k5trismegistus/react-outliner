@@ -27,7 +27,7 @@ const relation = (state, action) => {
       }
       let newChildrenIds = state.childrenIds.concat()
       let position =　(
-        (action.payload.position > 0)
+        (action.payload.position >= 0)
         ? action.payload.position
         : newChildrenIds.length + action.payload.position + 1)
       newChildrenIds.splice(position, 0, action.payload.nodeId)
