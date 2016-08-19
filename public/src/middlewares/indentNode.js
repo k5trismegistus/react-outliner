@@ -1,7 +1,7 @@
 // Decompose 'INDENT_NODE' action into some simple Actions
 
 import { INDENT_NODE } from '../actions/compositeActions'
-import { updateNode } from '../actions/nodes'
+import { updateNode, collapseNode } from '../actions/nodes'
 import { unregisterRelation, insertRelation } from '../actions/relations'
 
 const findRelationById = (relations, nodeId) => {
@@ -36,9 +36,11 @@ export const mwIndentNode = store => next => action => {
     }
 
     const insertRelationAction = insertRelation(action.payload.nodeId, prevSiblingRelation.id, -1)
+    const collapseNodeAction = collapseNode(prevSiblingRelation.id)
     next(updateAction)
     next(unregisterRelationAction)
     next(insertRelationAction)
+    next(collapseNodeAction)
     return
   }
   next(action)
