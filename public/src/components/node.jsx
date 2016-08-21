@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { DropTarget, DragSource } from 'react-dnd'
+import FontIcon from 'material-ui/FontIcon'
 import ChildrenNodesListContainer from '../containers/childrenNodesListContainer'
+
+const iconStyles = {
+  marginRight: 24,
+}
 
 const nodeSource = {
   beginDrag: (props, monitor, component) => {
@@ -62,7 +67,7 @@ class Node extends Component {
       this.props.unindentNode(this.props.node.id, this.refs.editableField.textContent)
     }
     // Add new node
-    else if (!e.shiftKey && e.keyCode == '13') {
+    else if (e.keyCode == '13') {
       let selection = window.getSelection()
       let range = selection.getRangeAt(0)
       console.log(range)
@@ -127,9 +132,6 @@ class Node extends Component {
     }
   }
 
-  _onClick(e) {
-  }
-
   componentDidMount() {
     this.refs.editableField.focus()
   }
@@ -138,17 +140,21 @@ class Node extends Component {
     const { connectDragSource, connectDragPreview, isDragging } = this.props
     return this.props.connectDragPreview(this.props.connectDropTarget(
       <li onClick={ this.props.onNodeClick }>
-        { this.props.connectDragSource(
-          <div>@</div>
-        ) }
         <div
-          ref='editableField'
-          className="node"
-          contentEditable
-          onClick={ this._onClick.bind(this) }
-          onBlur={ this._onBlur.bind(this) }
-          onKeyDown={ this._onKeyDown.bind(this) } >
-          { this.props.node.content }
+          className="edit-field">
+          { this.props.connectDragSource(
+            <div>
+              <i className="material-icons">add_circle</i>
+            </div>
+          ) }
+          <div
+            ref='editableField'
+            className="node"
+            contentEditable
+            onBlur={ this._onBlur.bind(this) }
+            onKeyDown={ this._onKeyDown.bind(this) } >
+            { this.props.node.content }
+          </div>
         </div>
         <ChildrenNodesListContainer
           key={ this.props.node.id }
@@ -157,6 +163,10 @@ class Node extends Component {
       </li>
     ))
   }
+}
+
+Node.childContextTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
 }
 
 export default DragSource('Node', nodeSource, collectSource)(
